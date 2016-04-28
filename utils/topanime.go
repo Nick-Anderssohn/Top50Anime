@@ -17,12 +17,10 @@ func GetTopAnime(numAnime int) string {
 
 func getMALHTML() string {
 	response, err := http.Get("http://myanimelist.net/topanime.php?_location=mal_h_m")
+	defer response.Body.Close()
 	if err != nil {
 		log.Fatal(err)
-		response.Body.Close()
-		return ""
 	}
-	defer response.Body.Close()
 	htmlCode, _ := ioutil.ReadAll(response.Body)
 	return string(htmlCode)
 }
