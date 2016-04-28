@@ -1,13 +1,18 @@
 package topanime
 
 import (
-	"log"
+	"fmt"
 	"io/ioutil"
+	"log"
 	"net/http"
 	"strings"
 )
 
-//numAnime must be less than 50
+func main() {
+	fmt.Println(GetTopAnime(50))
+}
+
+//GetTopAnime numAnime must be 1-50
 func GetTopAnime(numAnime int) string {
 	if numAnime < 51 && numAnime > 0 {
 		return parseUpToFiftyAnime(numAnime)
@@ -18,7 +23,7 @@ func GetTopAnime(numAnime int) string {
 func getMALHTML() string {
 	response, err := http.Get("http://myanimelist.net/topanime.php?_location=mal_h_m")
 	if err != nil {
-		log.error(err)
+		log.Fatal(err)
 		response.Body.Close()
 		return ""
 	}
@@ -42,7 +47,7 @@ func parseUpToFiftyAnime(num int) string {
 		htmlCode = string(curSlice[index+17:])
 		curSlice = htmlCode[0:]
 	}
-	return listOfShows
+	return strings.Replace(listOfShows, "&amp;#039;", "'", 50)
 }
 
 func subStr(s string, startIndex int, endChar byte) string {

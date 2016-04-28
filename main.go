@@ -1,5 +1,0 @@
-package topanime
-
-func main() {
-
-}
