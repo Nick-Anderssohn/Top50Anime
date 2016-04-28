@@ -1,16 +1,11 @@
 package topanime
 
 import (
-	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
 	"strings"
 )
-
-func main() {
-	fmt.Println(GetTopAnime(50))
-}
 
 //GetTopAnime numAnime must be 1-50
 func GetTopAnime(numAnime int) string {
