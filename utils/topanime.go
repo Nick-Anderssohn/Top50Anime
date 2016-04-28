@@ -1,6 +1,7 @@
 package topanime
 
 import (
+	"log"
 	"io/ioutil"
 	"net/http"
 	"strings"
@@ -16,11 +17,14 @@ func GetTopAnime(numAnime int) string {
 
 func getMALHTML() string {
 	response, err := http.Get("http://myanimelist.net/topanime.php?_location=mal_h_m")
-	if nil == err {
-		htmlCode, _ := ioutil.ReadAll(response.Body)
-		return string(htmlCode)
+	if err != nil {
+		log.error(err)
+		response.Body.Close()
+		return ""
 	}
-	return ""
+	defer response.Body.Close()
+	htmlCode, _ := ioutil.ReadAll(response.Body)
+	return string(htmlCode)
 }
 
 //walks through char by char....painfully
